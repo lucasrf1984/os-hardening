@@ -1,0 +1,14 @@
+---
+- hosts: win-hardening
+  tasks:
+    - name: "Set maximum password age"
+      community.windows.win_security_policy:
+        section: System Access
+        key: MaximumPasswordAge
+        value: 90
+    
+    - name: "Set minimum password age"
+      community.windows.win_security_policy:
+        section: System Access
+        key: MinimumPasswordAge
+        value: 14

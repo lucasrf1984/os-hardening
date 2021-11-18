@@ -1,0 +1,5 @@
+---
+- hosts: win-hardening
+  roles:
+  - ism
+

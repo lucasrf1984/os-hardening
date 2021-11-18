@@ -1,0 +1,120 @@
+    - name: "Set maximum password age"
+      community.windows.win_security_policy:
+        section: System Access
+        key: MaximumPasswordAge
+        value: 90
+    
+    - name: "Set minimum password age"
+      community.windows.win_security_policy:
+        section: System Access
+        key: MinimumPasswordAge
+        value: 14
+
+    - name: "Set password complexity"
+      community.windows.win_security_policy:
+        section: System Access
+        key: PasswordComplexity 
+        value: 1
+
+    - name: "Set password min length"
+      community.windows.win_security_policy:
+        section: System Access
+        key: MinimumPasswordLength 
+        value: 8
+
+    - name: enable system events
+      win_security_policy:
+        section: Event Audit
+        key: AuditSystemEvents
+        value: 1
+
+    - name: enable logon events
+      win_security_policy:
+        section: Event Audit
+        key: AuditLogonEvents
+        value: 1
+
+    - name: enable object access events
+      win_security_policy:
+        section: Event Audit
+        key: AuditObjectAccess
+        value: 1
+
+    - name: enable privilege use events
+      win_security_policy:
+        section: Event Audit
+        key: AuditPrivilegeUse
+        value: 1
+
+    - name: enable account logon events
+      win_security_policy:
+        section: Event Audit
+        key: AuditAccountLogon
+        value: 1
+
+    - name: enable policy change events
+      win_security_policy:
+        section: Event Audit
+        key: AuditPolicyChange
+        value: 1
+
+    - name: enable account manage events
+      win_security_policy:
+        section: Event Audit
+        key: AuditAccountManage
+        value: 1  
+
+    - name: enable proccess tracking events
+      win_security_policy:
+        section: Event Audit
+        key: AuditProcessTracking
+        value: 1   
+
+    - name: "Set password history count"
+      community.windows.win_security_policy:
+        section: System Access
+        key: PasswordHistorySize 
+        value: 2
+
+    - name: "Disable remote registry"
+      ansible.windows.win_service:
+        name: RemoteRegistry
+        state: stopped
+        start_mode: disabled
+
+    - name: "Enable NTP"
+      ansible.windows.win_service:
+        name: W32Time
+        state: started
+        start_mode: auto
+
+    - name: Disable Windows Administrative shares - registry
+      win_regedit:
+        key: "{{ item.k }}"
+        value: "{{ item.v }}"
+        data: "{{ item.d }}"
+        datatype: dword
+      with_items:
+        - { k: 'HKLM:\SYSTEM\CurrentControlSet\Services\LanManServer\Parameters', v: 'AutoShareWks', d: 0 }
+        - { k: 'HKLM:\SYSTEM\CurrentControlSet\Services\LanManServer\Parameters', v: 'AutoShareServer', d: 0 }
+        - { k: 'HKLM:\SYSTEM\CurrentControlSet\Control\Lsa', v: 'restrictanonymous', d: 1 }
+
+# OK https://ci.appveyor.com/project/juju4/ansible-harden-windows/builds/25835253
+# NOK https://ci.appveyor.com/project/juju4/ansible-harden-windows/builds/26122112/job/lbkffjihylphl9cq#L5430
+    - name: Disable Windows Administrative shares - current session
+      win_share:
+        name: "{{ item }}"
+        state: absent
+      with_items:
+        - "admin$"
+        - "c$"
+        - "d$"
+        - "e$"
+      failed_when: false
+   
+    - name: Disable Guest account
+      win_security_policy:
+        section: System Access
+        key: EnableGuestAccount
+        value: 0
+

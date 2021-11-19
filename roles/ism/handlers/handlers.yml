@@ -1,5 +1,5 @@
-handlers:
-  - name: RDP Restart
-    ansible.windows.win_service: 
-      name: TermService
-      state: restarted
+- name: RDP Restart 
+  ansible.windows.win_service: 
+    name: TermService
+    state: restarted 
+    force_dependent_services: yes

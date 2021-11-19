@@ -1,2 +1,3 @@
 ---
 # handlers file for ism
+include: handler.yml

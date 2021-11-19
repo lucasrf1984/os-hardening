@@ -1,0 +1,5 @@
+handlers:
+  - name: RDP Restart
+    ansible.windows.win_service: 
+      name: TermService
+      state: restarted

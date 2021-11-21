@@ -1,0 +1,51 @@
+- name: Copy zabbix agent installation files
+  ansible.windows.win_copy:
+    src: files/Zabbix 
+    dest: C:\ 
+
+- name: Create a new service
+  ansible.windows.win_service:
+    name: Zabbix-Agent
+    path: c:\zabbix\bin\zabbix_agentd.exe --config c:\zabbix\conf\zabbix_agentd.conf
+    start_mode: delayed
+    state: started
+
+- name: Create host groups
+  local_action:
+    module: community.zabbix.zabbix_group
+    server_url: "{{ server_url }}"
+    login_user: "{{ login_user }}"
+    login_password: "{{ login_password }}"
+    state: present
+    host_groups:
+      - "{{ ansible_os_family }}"
+
+- name: Create a new host or update an existing host's info
+  local_action:
+    module: community.zabbix.zabbix_host
+    server_url: "{{ server_url }}"
+    login_user: "{{ login_user }}"
+    login_password: "{{ login_password }}"
+    host_name: "{{ ansible_hostname }}"
+    visible_name: "{{ ansible_hostname }}"
+    description: "{{ ansible_hostname }}"
+    host_groups:
+      - "{{ ansible_os_family }}"
+    link_templates:
+      - Template OS Windows by Zabbix agent
+    status: enabled 
+    state: present
+    interfaces:
+      - type: 1 
+        main: 1
+        useip: 1
+        ip:  "{{ ansible_ip_addresses[0] }}"
+        port: "{{ zabbix_port }}" 
+
+- name: Ensure zabbix agent has the correct server set
+  community.windows.win_lineinfile: 
+    path: C:\Zabbix\conf\zabbix_agentd.conf
+    regexp: '^Server='
+    line: Server={{ zabbix_server }}
+  notify: Zabbix Agent Restarted
+

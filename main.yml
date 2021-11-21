@@ -1,5 +1,7 @@
 ---
 - hosts: win-hardening
   roles:
-  - ism
+  - os-sec
+  - apps
+  - monitoring
 

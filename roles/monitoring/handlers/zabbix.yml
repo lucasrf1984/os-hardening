@@ -1,0 +1,5 @@
+- name: Zabbix Agent Restarted
+  ansible.windows.win_service:
+    name: Zabbix-Agent
+    state: restarted
+

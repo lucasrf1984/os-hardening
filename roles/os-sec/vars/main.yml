@@ -1,0 +1,5 @@
+---
+# vars file for os-sec
+rdp_port: 8933
+ansible_usr: ansible
+ansible_pwd: ansible_user*2021

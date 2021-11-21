@@ -1,0 +1,3 @@
+---
+# tasks file for apps
+- include: apps.yml

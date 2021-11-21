@@ -1,0 +1,10 @@
+---
+# vars file for monitoring
+server_url: http://192.168.5.128/zabbix
+login_user: Admin
+login_password: zabbix
+zabbix_port: 10050
+type: 1
+main: 1
+userip: 1
+zabbix_server: 192.168.5.128

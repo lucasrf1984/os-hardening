@@ -1,0 +1,9 @@
+[win-hardening]
+192.168.5.138
+
+[win-hardening:vars]
+ansible_user=administrador
+ansible_password=r32@golfv6
+ansible_connection=winrm
+ansible_winrm_server_cert_validation=ignore
+

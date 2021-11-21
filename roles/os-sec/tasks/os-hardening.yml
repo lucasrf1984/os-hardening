@@ -74,21 +74,21 @@
       community.windows.win_eventlog:
         name: System
         maximum_size: 32MB
-        overflow_action: DoNotOverwrite
+        overflow_action: OverwriteAsNeeded
         state: present
     
     - name: "Define event viewer size of Application events"
       community.windows.win_eventlog:
         name: Application
         maximum_size: 32MB
-        overflow_action: DoNotOverwrite
+        overflow_action: OverwriteAsNeeded 
         state: present
     
     - name: "Define event viewer size of security events"
       community.windows.win_eventlog:
         name: Security
         maximum_size: 32MB
-        overflow_action: DoNotOverwrite
+        overflow_action: OverwriteAsNeeded
         state: present
     
     - name: "Set password history count"

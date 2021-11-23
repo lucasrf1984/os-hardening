@@ -3,7 +3,7 @@
 
 [win-hardening:vars]
 ansible_user=administrador
-ansible_password=r32@golfv6
+ansible_password=[add the server password here, quotes are no needed]
 ansible_connection=winrm
 ansible_winrm_server_cert_validation=ignore
 

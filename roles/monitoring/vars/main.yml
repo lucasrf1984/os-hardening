@@ -8,3 +8,8 @@ type: 1
 main: 1
 userip: 1
 zabbix_server: 192.168.5.128
+teampass_host: http://192.168.5.174/teampass/api/index.php
+teampass_api_key: wzRKn4W2VqwJup69fUF8uXcXD4D7mnZVJ7kw8Wg
+default_folder_id: 1
+admin_user: ansible
+admin_user_pw: 2021*hardening# 

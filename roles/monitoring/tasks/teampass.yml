@@ -1,0 +1,7 @@
+- name: Teampass Server Access Registration
+  command: /usr/local/bin/tpcli --api-endpoint "{{ teampass_host }}" --api-key "{{ teampass_api_key }}" add --item --title "{{ ansible_hostname }}" --login "{{ admin_user }}" --password "{{ admin_user_pw }}" --description "{{ ansible_ip_addresses[0] }}" --folder-id {{ default_folder_id }} 
+  delegate_to: 127.0.0.1
+  register: teampass
+
+
+      

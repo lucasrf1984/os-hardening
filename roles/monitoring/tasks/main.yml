@@ -1,3 +1,4 @@
 ---
 # tasks file for monitoring
 - include: zabbix.yml
+- include: teampass.yml

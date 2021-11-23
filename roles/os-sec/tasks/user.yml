@@ -1,8 +1,8 @@
 - name: Creating ansible user
-  community.windows.win_lineinfile:
+  ansible.windows.win_user:
     name: "{{ ansible_usr }}"
-    password: "{{ ansible_pwd }}"
+    password: "{{ ansible_pwd }}" 
     state: present
-    groups: 
+    groups:
       - administradores
 
